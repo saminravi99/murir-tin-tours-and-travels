@@ -1,22 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Request, Response } from 'express'
+import { NextFunction, Request, Response } from 'express'
 import { userServices } from '../services/user.service'
+import sendSuccessResponse from '../utils/sendResponse'
 
-const createUser = async (req: Request, res: Response) => {
+const createUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const userData = req.body
     const result = await userServices.createUser(userData)
-    res.status(201).json({
-      status: 'success',
+    sendSuccessResponse(res, {
+      statusCode: 201,
       message: 'User created successfully',
       data: result,
     })
   } catch (error: any) {
-    console.log(error)
-    res.status(500).json({
-      status: 'fail',
-      message: error.message || 'Something went wrong',
-    })
+    next(error)
   }
 }
 
