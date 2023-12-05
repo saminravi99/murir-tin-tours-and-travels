@@ -124,3 +124,20 @@ Review : { -> parent refrencing
 
 
 collection er closness
+
+
+Express App
+Database - mongodb
+{
+    name  : false
+    age : "",
+    students :[]
+}
+
+//Mongoose - ODM
+// Validation
+
+
+// Field Validation - If the field is given or not
+// Indexing -If The data is unique or not (Duplicacy Check)
+// DataType Validation

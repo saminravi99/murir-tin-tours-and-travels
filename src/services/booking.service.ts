@@ -3,6 +3,7 @@ import mongoose from 'mongoose'
 import { IBooking } from '../interfaces/booking.interface'
 import Booking from '../models/booking.model'
 import Tour from '../models/tour.model'
+import GenericError from '../classes/errorClasses/GenericError'
 
 // const createBookingWithoutTransaction = async (
 //   bookingData: IBooking,
@@ -40,7 +41,6 @@ const createBooking = async (bookingData: IBooking): Promise<IBooking> => {
   const session = await mongoose.startSession()
   //session is the isolated environment
 
-
   //start the database operation in isolated environment
   session.startTransaction()
 
@@ -50,18 +50,19 @@ const createBooking = async (bookingData: IBooking): Promise<IBooking> => {
 
     //so booking is an array of object with one object
     if (!booking) {
-      throw new Error('Booking failed')
+      // throw new Error('Booking failed')
+      throw new GenericError('Booking failed', 400)
     }
 
     // throw new Error('Booking failed fake error')
     const tour = await Tour.findByIdAndUpdate(
       booking[0].tour,
-    //   {
-    //     $inc: { availableSeats: -booking[0].bookedSlots },
-    //   },
-        {
-          availableSeats: { $inc: -booking[0].bookedSlots },
-        },
+      //   {
+      //     $inc: { availableSeats: -booking[0].bookedSlots },
+      //   },
+      {
+        availableSeats: { $inc: -booking[0].bookedSlots },
+      },
 
       {
         session,
@@ -70,7 +71,8 @@ const createBooking = async (bookingData: IBooking): Promise<IBooking> => {
       },
     )
     if (!tour) {
-      throw new Error('Tour Update in booking failed')
+      // throw new Error('Tour Update in booking failed')
+      throw new GenericError('Tour Update in booking failed', 400)
     }
 
     await session.commitTransaction()
@@ -82,7 +84,8 @@ const createBooking = async (bookingData: IBooking): Promise<IBooking> => {
   } catch (error: any) {
     await session.abortTransaction()
     await session.endSession()
-    throw new Error(error)
+    // throw new Error(error)
+    throw new GenericError(error.message, 400)
   }
 }
 
@@ -106,9 +109,9 @@ const updateBooking = async (
   id: string,
   bookingData: IBooking,
 ): Promise<IBooking | null> => {
-    //apply transaction here
-    //if bookedSlots decreases, then increase availableSeats in tour
-    //if bookedSlots increases, then decrease availableSeats in tour
+  //apply transaction here
+  //if bookedSlots decreases, then increase availableSeats in tour
+  //if bookedSlots increases, then decrease availableSeats in tour
   const result = await Booking.findByIdAndUpdate(id, bookingData, {
     new: true,
     runValidators: true,
