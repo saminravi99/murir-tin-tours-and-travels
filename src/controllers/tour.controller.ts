@@ -3,7 +3,6 @@ import { Request, Response } from 'express'
 import { tourServices } from '../services/tour.service'
 import catchAsyncFunction from '../utils/catchAsync'
 import sendSuccessResponse from '../utils/sendResponse'
-import { createTourZodSchema } from '../validations/tour.validation'
 
 // const fn = async () => {
 //   const anotherFn = async () => {}
@@ -37,15 +36,15 @@ import { createTourZodSchema } from '../validations/tour.validation'
 //    })
 // }
 
+//middleware e data validate kore req.body data put kore 
+
 const createTour = catchAsyncFunction(async (req: Request, res: Response) => {
+  //req.body theke user theke data  nicchi
+  //zod schema diye user data ke parse kortesi
+  console.log(req.body, "from controller");
   const tourData = req.body
-  const validatedData = createTourZodSchema.parse(tourData)
 
-  if (!validatedData) {
-    throw new Error('Validation failed')
-  }
-
-  const result = await tourServices.createTour(validatedData)
+  const result = await tourServices.createTour(tourData)
   sendSuccessResponse(res, {
     statusCode: 201,
     message: 'Tour created successfully',
@@ -56,7 +55,7 @@ const createTour = catchAsyncFunction(async (req: Request, res: Response) => {
 // app vitore next call -> router -> controller -> response -> but error hoise -> next(error) ->
 
 const getAllTours = catchAsyncFunction(async (req: Request, res: Response) => {
-  const result = await tourServices.getAllTours()
+  const result = await tourServices.getAllTours(req.query)
   // throw new Error('Something went wrong')
   sendSuccessResponse(res, {
     statusCode: 200,

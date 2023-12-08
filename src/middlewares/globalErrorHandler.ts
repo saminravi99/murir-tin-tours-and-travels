@@ -26,7 +26,7 @@ const globalErrorHandler = (
     issues: err.issues || [],
   }
 
-  console.log(err)
+  console.log(err, "development mode")
 
   errorResponse = errorPreproccesor(err)
   // Sob error er Baap hocche JS Error Class

@@ -141,3 +141,6 @@ Database - mongodb
 // Field Validation - If the field is given or not
 // Indexing -If The data is unique or not (Duplicacy Check)
 // DataType Validation
+
+//Express Middleware
+//Mongoose - Data Filtering - Filter, Searching, Pagination, Sorting etc

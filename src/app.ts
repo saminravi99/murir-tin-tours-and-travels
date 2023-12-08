@@ -18,6 +18,7 @@ app.use(cors())
 app.use('/api/v1', globalRoute)
 //ber hoye jabe
 
+//app.get(middleware-1, middleware-2, middleware-3, controller)
 app.get('/', (req: Request, res: Response) => {
   res.status(200).json({
     status: 'success',
@@ -57,5 +58,7 @@ app.use(globalErrorHandler)
 //     message,
 //   })
 // })
+
+//express app - train
 
 export default app
