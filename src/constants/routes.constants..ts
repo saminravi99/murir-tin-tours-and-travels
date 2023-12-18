@@ -1,9 +1,14 @@
+import { authRoutes } from '../routes/auth.route'
 import { bookingRoutes } from '../routes/booking.route'
 import { reviewRoutes } from '../routes/review.route'
 import { tourRoutes } from '../routes/tour.route'
 import { userRoutes } from '../routes/user.route'
 
 const routes = [
+  {
+    path: '/auth',
+    route: authRoutes,
+  },
   {
     path: '/users',
     route: userRoutes,

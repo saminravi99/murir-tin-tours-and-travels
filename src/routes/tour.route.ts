@@ -27,7 +27,7 @@ const router = express.Router()
 
 router.post(
   '/create-tour',
-//   validateRequest(createTourZodSchema),
+  // validateRequest(createTourZodSchema),
   tourController.createTour,
 )
 router.get('/', tourController.getAllTours)

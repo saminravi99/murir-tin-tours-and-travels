@@ -9,10 +9,12 @@ import { reviewRoutes } from './routes/review.route'
 import globalErrorHandler from './middlewares/globalErrorHandler'
 import notFound from './middlewares/notFound'
 import globalRoute from './routes'
+import cookieParser from 'cookie-parser'
 
 const app: Application = express()
 
 app.use(express.json())
+app.use(cookieParser())
 app.use(cors())
 
 app.use('/api/v1', globalRoute)

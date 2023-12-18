@@ -144,3 +144,8 @@ Database - mongodb
 
 //Express Middleware
 //Mongoose - Data Filtering - Filter, Searching, Pagination, Sorting etc
+
+
+//Authentication & Authorization
+//email / username /userId
+//password
